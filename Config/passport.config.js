@@ -1,13 +1,11 @@
 const passport = require('passport');
-const passportLocal = require('passport-local');
-const LocalStrategy = passportLocal.Strategy;
-const passportJWT = require('passport-jwt');
-const JWTStrategy = passportJWT.Strategy;
-const ExtractJWT = passportJWT.ExtractJwt;
-const db = require('../models');
-const User = db.user;
+const LocalStrategy = require('passport-local').Strategy;
+const JWTStrategy = require('passport-jwt').Strategy;
+const ExtractJWT = require('passport-jwt').ExtractJwt;
 
-const tools = require('../utils/tools');
+const User = require('../Models/index.model.js').user;
+
+const tools = require('../Utils/tools.js');
 
 
 passport.use(new JWTStrategy({
@@ -25,7 +23,6 @@ passport.use(new JWTStrategy({
       });
   }
 ))
-
 
 passport.use(new LocalStrategy({
   usernameField: 'email',

@@ -1,9 +1,9 @@
-const db = require('../models');
-const User = db.user;
 const passport = require('passport');
-require('../helpers/passport');
+require('../Config/passport.config.js');
 
-const tools = require('../utils/tools');
+const User = require('../Models/index.model.js').user;
+
+const tools = require('../Utils/tools.js');
 
 
 //Create user

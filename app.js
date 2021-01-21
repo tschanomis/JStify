@@ -1,13 +1,13 @@
 const express = require('express');
 const app = express();
 
-const db = require('./models');
+const db = require('./Models/index.model');
 db.sequelize.sync();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const apiRouter = require('./routes/index.js');
+const apiRouter = require('./Routes/index.route.js');
 
 app.use('/api', apiRouter);
 

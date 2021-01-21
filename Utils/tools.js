@@ -26,12 +26,12 @@ exports.justify = (maxLineLength, text) => {
 //Generate hash
 exports.genHash = password => {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
-}
+};
 
 //Compare password and hash
 exports.comparePassword = (password, hash) => {
-  return bcrypt.compareSync(password, hash)
-}
+  return bcrypt.compareSync(password, hash);
+};
 
 //Generate token
 exports.genToken = user => {
@@ -41,4 +41,4 @@ exports.genToken = user => {
     iat: new Date().getTime(),
     exp: new Date().setDate(new Date().getDate() + 1)
   }, 'tictactrip');
-}
+};

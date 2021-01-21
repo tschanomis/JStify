@@ -1,13 +1,13 @@
 const passport = require('passport');
-const db = require('../models');
-const User = db.user;
 
-const tools = require('../utils/tools')
+const User = require('../Models/index.model').user;
+
+const tools = require('../Utils/tools');
 
 
 exports.justifyText = (req, res, next) => {
   try {
-    const text = req.body
+    const text = req.body;
 
     //Check content
     if (!text.length || typeof req.body !== "string") {
