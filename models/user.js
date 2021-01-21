@@ -9,7 +9,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       allowNull: false
     },
-    wordsLeft: {
+    wordsTotal: {
       type: Sequelize.BIGINT(11),
       defaultValue: 0,
       allowNull: false

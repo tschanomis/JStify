@@ -29,14 +29,14 @@ exports.create = (req, res) => {
             .then(function (newUser) {
               // Generate JWT token
               const token = tools.genToken(newUser);
-              res.status(200).json({ token });
+              return res.status(200).json({ token });
             });
         }
       })
 
     //Return error
   } catch (err) {
-    res.status(500).json({ error: err.name });
+    return res.status(500).json({ error: err.name });
   }
 }
 
@@ -44,10 +44,12 @@ exports.create = (req, res) => {
 exports.login = (req, res, next) => {
   try {
     const { email, password } = req.body;
+
     //Check content
     if (!email || !password) {
-      res.status(500).json({ error: "informations is missing" });
+      return res.status(500).json({ error: "informations is missing" });
     }
+
     //Authentication
     passport.authenticate('local', function (err, user, info) {
       if (err) {
@@ -62,6 +64,6 @@ exports.login = (req, res, next) => {
 
     //Return error
   } catch (err) {
-    res.status(500).json({ error: err.name });
+    return res.status(500).json({ error: err.name });
   }
 }

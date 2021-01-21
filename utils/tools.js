@@ -33,6 +33,7 @@ exports.comparePassword = (password, hash) => {
   return bcrypt.compareSync(password, hash)
 }
 
+//Generate token
 exports.genToken = user => {
   return jwt.sign({
     iss: 'tictactrip',

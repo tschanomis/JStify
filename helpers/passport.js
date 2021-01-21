@@ -12,7 +12,8 @@ const tools = require('../utils/tools');
 
 passport.use(new JWTStrategy({
   jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-  secretOrKey: 'tictactrip'
+  secretOrKey: 'tictactrip',
+  session: false
 },
   function (jwtPayload, done) {
     return User.findByPk(jwtPayload.sub)
@@ -20,7 +21,7 @@ passport.use(new JWTStrategy({
         return done(null, user);
       })
       .catch(err => {
-        return done(err);
+        return done(null, err);
       });
   }
 ))
