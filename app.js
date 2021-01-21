@@ -1,6 +1,10 @@
 const express = require('express');
 const app = express();
 
+require('dotenv').config()
+const hostname = process.env.HOST;
+const port = process.env.PORT;
+
 const db = require('./Models/index.model');
 db.sequelize.sync();
 
@@ -18,5 +22,5 @@ app.use(function (req, res, next) {
 });
 
 let server = app.listen(process.env.PORT || 4000, function () {
-  console.log('Listening on port ' + server.address().port);
+  console.log(`Server running at http://${hostname}:${port}/`);
 });
