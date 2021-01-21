@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const justifyRoute = require('./justify/justify.js');
-const authRoute = require('./auth/auth.js');
+const justifyRoute = require('./justify.js');
+const authRoute = require('./auth.js');
 
 
 router.use('/auth', authRoute);

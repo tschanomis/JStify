@@ -37,13 +37,15 @@ exports.create = (req, res) => {
           });
         }
       })
-
+    //Return error
   } catch (err) {
-    res.status(500).send.json({ error: err.name })
+    res.status(500).send.json({ error: err.name });
   }
-};
-
-exports.login = (req, res) => {
-  res.status(200).json(req.user.dataValues)
 }
 
+exports.login = (req, res) => {
+  if (req.user) {
+    const token = genToken(req.user);
+    res.status(200).json({ token });
+  }
+}

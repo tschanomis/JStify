@@ -8,6 +8,11 @@ module.exports = (sequelize, Sequelize) => {
     password: {
       type: Sequelize.STRING,
       allowNull: false
+    },
+    wordsLeft: {
+      type: Sequelize.BIGINT(11),
+      defaultValue: 0,
+      allowNull: false
     }
   });
   return User;
