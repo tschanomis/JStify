@@ -1,24 +1,16 @@
 const db = require('../models');
 const User = db.user;
-const jwt = require('jsonwebtoken');
-
+const passport = require('passport');
 require('../helpers/passport');
 
+const tools = require('../utils/tools');
 
-genToken = user => {
-  return jwt.sign({
-    iss: 'tictactrip',
-    sub: user.id,
-    iat: new Date().getTime(),
-    exp: new Date().setDate(new Date().getDate() + 1)
-  }, 'tictactrip');
-}
 
 //Create user
 exports.create = (req, res) => {
   try {
-
     const { email, password } = req.body;
+
     //Check content
     if (!req.body.email || !req.body.password) {
       return res.status(400).send({ message: "Content can not be empty!" });
@@ -30,22 +22,46 @@ exports.create = (req, res) => {
         if (data.length > 0) {
           return res.status(403).json({ error: 'Email is already in use' });
         } else {
-          User.create({ email: email, password: password }).then(function (newUser) {
-            // Generate JWT token
-            const token = genToken(newUser);
-            res.status(200).json({ token });
-          });
+          // Generate Hash
+          const hash = tools.genHash(password);
+          //Create user
+          User.create({ email: email, password: hash })
+            .then(function (newUser) {
+              // Generate JWT token
+              const token = tools.genToken(newUser);
+              res.status(200).json({ token });
+            });
         }
       })
+
     //Return error
   } catch (err) {
-    res.status(500).send.json({ error: err.name });
+    res.status(500).json({ error: err.name });
   }
 }
 
-exports.login = (req, res) => {
-  if (req.user) {
-    const token = genToken(req.user);
-    res.status(200).json({ token });
+//Connect user
+exports.login = (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    //Check content
+    if (!email || !password) {
+      res.status(500).json({ error: "informations is missing" });
+    }
+    //Authentication
+    passport.authenticate('local', function (err, user, info) {
+      if (err) {
+        return res.status(403).json({ error: info.message });
+      }
+      if (!user) {
+        return res.status(404).json({ error: info.message });
+      }
+      const token = tools.genToken(user);
+      return res.status(200).json({ token });
+    })(req, res, next);
+
+    //Return error
+  } catch (err) {
+    res.status(500).json({ error: err.name });
   }
 }

@@ -6,6 +6,6 @@ router.use(bodyParser.text());
 
 const justify = require('../controllers/justify');
 
-router.post('/', passport.authenticate('jwt', { session: false }), justify.justifyText)
+router.post('/', passport.authenticate('jwt'), justify.justifyText)
 
 module.exports = router;

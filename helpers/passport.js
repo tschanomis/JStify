@@ -7,6 +7,8 @@ const ExtractJWT = passportJWT.ExtractJwt;
 const db = require('../models');
 const User = db.user;
 
+const tools = require('../utils/tools');
+
 
 passport.use(new JWTStrategy({
   jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
@@ -23,24 +25,26 @@ passport.use(new JWTStrategy({
   }
 ))
 
+
 passport.use(new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password',
   session: false
 },
   function (username, password, done) {
-    User.findOne({ where: { email: username } })
+    return User.findOne({ where: { email: username } })
       .then(user => {
         if (!user) {
-          return done(null, false, { message: 'Incorrect username.' });
+          return done(null, false, { message: 'Incorrect email.' });
         }
-        if (user.password != password) {
+        const validPassword = tools.comparePassword(password, user.password);
+        if (!validPassword) {
           return done(null, false, { message: 'Incorrect password.' });
         }
         return done(null, user);
       })
       .catch(err => {
-        return done(err);
+        return done(null, err);
       });
   })
 );
