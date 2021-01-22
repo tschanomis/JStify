@@ -1,3 +1,4 @@
+require('dotenv').config();
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const JWTStrategy = require('passport-jwt').Strategy;
@@ -10,7 +11,7 @@ const tools = require('../Utils/tools.js');
 
 passport.use(new JWTStrategy({
   jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-  secretOrKey: 'tictactrip',
+  secretOrKey: process.env.DB_HOST,
   session: false
 },
   function (jwtPayload, done) {
