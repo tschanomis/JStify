@@ -11,8 +11,8 @@ services:
     environment:
       MYSQL_DATABASE: ''
       MYSQL_ROOT_PASSWORD: ''
-      SERVICE_TAGS: ''
-      SERVICE_NAME: ''
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
     volumes:
       - dbdata:/var/lib/mysql/
     networks:
