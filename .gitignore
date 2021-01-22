@@ -3,6 +3,6 @@ build
 npm-debug.log
 .env
 .DS_Store
-./Config/config.json
+Config.json
 docker-compose.example
 
