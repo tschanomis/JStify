@@ -1,3 +1,4 @@
+require('dotenv').config();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -36,9 +37,9 @@ exports.comparePassword = (password, hash) => {
 //Generate token
 exports.genToken = user => {
   return jwt.sign({
-    iss: 'tictactrip',
+    iss: 'jstify',
     sub: user.id,
     iat: new Date().getTime(),
     exp: new Date().setDate(new Date().getDate() + 1)
-  }, 'tictactrip');
+  }, process.env.DB_HOST);
 };
