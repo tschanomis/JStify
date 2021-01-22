@@ -4,3 +4,5 @@ npm-debug.log
 .env
 .DS_Store
 ./Config/config.json
+docker-compose.example
+
